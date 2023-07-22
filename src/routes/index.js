@@ -9,7 +9,7 @@ const router = Router();
 router.post('/agregaLibro',agregaLibro );
 router.get('/obtenerLibros', obtenerLibros);
 
-router.get("/", handlerTodosUsuarios);
+router.get("/usuarios", handlerTodosUsuarios);
 router.get("/:idusuario", handlerUsuarioPorId);
 router.post("/crearUsuario", handleCrearUsuario);
 
