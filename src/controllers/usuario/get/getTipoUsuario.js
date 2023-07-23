@@ -1,4 +1,4 @@
-const { TipoUsuarios } = require("../../../models/tipoUsuario");
+const { TipoUsuarios } = require("../../../db");
 
 // Mostrar los tipos de usuarios
 const getTipoUsuario = async () => { 

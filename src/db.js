@@ -36,7 +36,7 @@ let capsEntries = entries.map(entry => [entry[0][0].toUpperCase() + entry[0].sli
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Create the relationships between the models
-const { libro, genero, Usuario, TipoUsuario } = sequelize.models;
+const { Libro, Genero, Usuario, TipoUsuario, Autor } = sequelize.models;
 // console.log(sequelize.models);
 
 TipoUsuario.hasMany(Usuario)
