@@ -5,8 +5,16 @@ const morgan = require('morgan');
 const routes = require('./routes/index');
 require("./db");
 
+// ------ agregado -------------
+const cors = require('cors');
+const rateLimit = require('express-rate-limit');
+// -----------------------------
+
 const server = express();
 
+// ------- agregado ------------
+server.use(cors());
+// -----------------------------
 server.name = 'API';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
@@ -30,6 +38,22 @@ server.use((req, res, next) => {
     );
     next();
     }
+
+    // -------------- agregado ------------------
+        /*
+            // res.header('Access-Control-Allow-Origin','http://190.100.208.178:3000' ); 
+            // res.header('Access-Control-Allow-Credentials', true); 
+            // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization'  );
+            // res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE, PATCH' );
+            // next();
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'GET, POST');
+            res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+            next();
+            }
+        */
+    // ------------------------------------------
+
 );
 
 server.use('/', routes);
