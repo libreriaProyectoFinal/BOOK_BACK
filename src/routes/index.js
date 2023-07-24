@@ -6,6 +6,8 @@ const { obtenerLibros } = require('../controllers/libro/obtenerLibros.js');
 // ------------- matheus -----------------
 // -usuarios
 const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+// -authLocal
+const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
 // ---------------------------------------
 
 // ----------------------- waldir ------------------
@@ -39,6 +41,7 @@ router.get("/obtenerLibroId/:idl", obtenerLibroPorId);
 router.get("/usuarios", handlerTodosUsuarios);
 router.get("/:idusuario", handlerUsuarioPorId);
 router.post("/crearUsuario", handleCrearUsuario);
+router.post("/login", autenticacionLocalUsuario);
 // -------------------------------------------
 
 // ---------------- waldir -------------------
