@@ -4,6 +4,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const { getUsuarioPorEmail } = require("../get/getUsuarioPorEmail");
 const { getUsuarioPorId } = require("../get/getUsuarioPorId");
+const { respuestaEmailCreacionUsuario } = require('../../../utils/respuestaEmailCreacionUsuario')
 
 
 const postCrearUsuario = async (name, password, email, nickname, picture, rol) => {
@@ -31,14 +32,14 @@ const postCrearUsuario = async (name, password, email, nickname, picture, rol) =
         // totalReviews: 0.0
     });
 
-    // Vinculación con el tipo de usuario (userType)
+    // Vinculación con el tipo de usuario
     console.log(TipoUsuario)
     const tipoUsuario = await TipoUsuario.findOne({ where: { rol: rol } });
     if (tipoUsuario) {
         // console.log("----->rol: ", tipoUsuario.rol);
         await usuario.setTipoUsuario(tipoUsuario);
         let usuarioFinal = await usuario.save();
-       // sendEmail(usuarioFinal.email);
+        respuestaEmailCreacionUsuario(usuarioFinal.email);
         console.log("final:", usuarioFinal);
 
         let formatoDeUsuario = await getUsuarioPorId(usuarioFinal.idusuario);
