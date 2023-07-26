@@ -1,4 +1,4 @@
-const {sequelize,Autor, Op } = require('../../db');
+const {sequelize,Autor, Op } = require('../../db.js');
 
 const obtenerAutorPorNombre = async (req, res) => {
   const autor = req.params.nombre;

@@ -1,4 +1,4 @@
-const { Libro } = require('../../db');
+const { Libro } = require('../../db.js');
 
 const borradoLibro = async (req, res) => {
   const { idlibro } = req.params;

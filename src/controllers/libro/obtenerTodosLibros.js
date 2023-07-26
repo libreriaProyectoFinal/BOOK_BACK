@@ -1,17 +1,17 @@
 // Controlador para obtener un producto por su ID
-const { Genero } = require('../../db.js');
+const { Libro } = require('../../db.js');
 
-const obtenerGeneros = async  (req, res) =>{
+const obtenerTodosLibros = async  (req, res) =>{
  //const  idg  = req.params.ida;
  try {
-  const respuesta = await Genero.findAll(
+  const respuesta = await Libro.findAll(
    {
-    order: [['nombregenero', 'ASC']],    
+    order: [['idlibro', 'ASC']],    
    }   
   );
   if (!respuesta)
   {
-   return res.status(404).json({ mensaje: 'Genero no encontrado' });
+   return res.status(404).json({ mensaje: 'Libros no encontrados' });
   }
    res.json(respuesta);
    console.log(JSON.stringify(respuesta))
@@ -20,4 +20,4 @@ const obtenerGeneros = async  (req, res) =>{
    res.status(500).json({ mensaje: 'Error al obtener el Genero' });
  }
 }
-module.exports = { obtenerGeneros };
+module.exports = { obtenerTodosLibros };

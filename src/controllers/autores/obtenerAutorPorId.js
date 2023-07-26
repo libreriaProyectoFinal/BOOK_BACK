@@ -1,5 +1,5 @@
 // Controlador para obtener un producto por su ID
-const { Autor } = require('../../db');
+const { Autor } = require('../../db.js');
 
 const obtenerAutorPorId = async  (req, res) =>{
  const  ida  = req.params.ida;
