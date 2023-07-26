@@ -7,7 +7,9 @@ const { obtenerLibros } = require('../controllers/libro/obtenerLibros.js');
 // -usuarios
 const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // -authLocal
-const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
+const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js');
+// -authGoogle
+const { handlerAutenticacionGoogle } = require('../controllers/usuarioGoogle/handler/handlerAutenticacionGoogle.js');
 // ---------------------------------------
 
 // ----------------------- waldir ------------------
@@ -42,6 +44,7 @@ router.get("/usuarios", handlerTodosUsuarios);
 router.get("/:idusuario", handlerUsuarioPorId);
 router.post("/crearUsuario", handleCrearUsuario);
 router.post("/login", autenticacionLocalUsuario);
+router.post("/login/google", handlerAutenticacionGoogle);
 // -------------------------------------------
 
 // ---------------- waldir -------------------
