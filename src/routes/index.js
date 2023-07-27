@@ -6,13 +6,11 @@ const { obtenerLibroPorId } = require('../controllers/libro/obtenerLibroPorId.js
 const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPorTitulo.js');
 const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
 // ------------- matheus -----------------
-
+// -usuarios
 // const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+// // -authLocal
 // const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
-// const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
-
 // ---------------------------------------
-
 // ----------------------- waldir ------------------
 // -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
@@ -34,7 +32,7 @@ const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
 // -sistema de pago--
 const  creaOCyDetalle  = require('../controllers/sistemaDePago/postOcDet.js'); 
 const  createPaymentPreference  = require("../controllers/sistemaDePago/paymentController.js");
-const  { handlePaymentNotification, receiveWebhook } = require("../controllers/paymentController.js");
+const  { handlePaymentNotification, receiveWebhook } = require("../controllers/sistemaDePago/paymentController.js");
 
 
 const router = Router();
@@ -47,10 +45,10 @@ router.post('/agregaLibro',agregaLibro );
 router.get('/obtenerLibros', obtenerLibros);
 router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 // ---------------- matheus ------------------
-//router.get("/usuarios", handlerTodosUsuarios);
-//router.get("/:idusuario", handlerUsuarioPorId);
-//router.post("/crearUsuario", handleCrearUsuario);
-//router.post("/login", autenticacionLocalUsuario);
+ // router.get("/usuarios", handlerTodosUsuarios);
+ // router.get("/:idusuario", handlerUsuarioPorId);
+ // router.post("/crearUsuario", handleCrearUsuario);
+ // router.post("/login", autenticacionLocalUsuario);
 // -------------------------------------------
 // ---------------- waldir -------------------
 router.delete("/borradoLibro/:idlibro", borradoLibro);
