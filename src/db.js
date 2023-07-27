@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { Sequelize } = require("sequelize");
+const { Sequelize ,DataTypes,Op} = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const pg = require('pg');
@@ -28,8 +28,10 @@ const sequelize = new Sequelize(
 //  {
 //      logging: false, // set to console.log to see the raw SQL queries
 //      native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+
 //  }
 // );
+
 
 const basename = path.basename(__filename);
 
@@ -55,15 +57,10 @@ let capsEntries = entries.map(entry => [entry[0][0].toUpperCase() + entry[0].sli
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Create the relationships between the models
-const { Libro, Genero, Usuario, TipoUsuario, Autor } = sequelize.models;
-// console.log(sequelize.models);
+const { libro, genero, autor } = sequelize.models;
 
-TipoUsuario.hasMany(Usuario)
-Usuario.belongsTo(TipoUsuario)
 
 module.exports = {
     ...sequelize.models, // Export the models 
-    conn: sequelize, // Export the connection
+    conn: sequelize, sequelize// Export the connection
 };
-
-
