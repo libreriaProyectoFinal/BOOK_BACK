@@ -43,6 +43,7 @@ const handleUsuarioPorEmail = async (req, res) => {
 const handleCrearUsuario = async (req, res) => {
   try {
     const { body } = req;
+    console.log(body);
     const response = await postCrearUsuario(
       body?.name,
       body?.password,
