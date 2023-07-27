@@ -33,13 +33,14 @@ const { obtenerLibroPorGenero } = require('../controllers/generos/ObtenerLibroPo
 
 
 const router = Router();
-// ------------ no mover esa ruta ---------------
+// ------------ no mover esa ruta (felipe) ---------------
 router.get("/obtenerGeneros", obtenerGeneros);
+router.get("/obtenerLibroPorGenero/:genero", obtenerLibroPorGenero);
+router.get('/obtenerLibros', obtenerLibros);
+router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 // ----------------------------------------------
 
 router.post('/agregaLibro',agregaLibro );
-router.get('/obtenerLibros', obtenerLibros);
-router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 
 
 // ---------------- matheus ------------------
@@ -56,7 +57,6 @@ router.put("/actualizarLibro/:idlibro", actualizarLibro);
 // -------------------------------------------
 
 // ---------------- felipe -------------------
-router.get("/obtenerLibroPorGenero/:genero", obtenerLibroPorGenero);
 router.get("/obtenerAutores", obtenerAutores);
 router.get("/obtenerAutorNombre/:nombre", obtenerAutorPorNombre);
 router.get("/obtenerAutorId/:ida", obtenerAutorPorId); 
