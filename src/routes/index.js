@@ -11,7 +11,6 @@ const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal
 // -authGoogle
 const { handlerAutenticacionGoogle } = require('../controllers/usuarioGoogle/handler/handlerAutenticacionGoogle.js');
 // ---------------------------------------
-
 // ----------------------- waldir ------------------
 // -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
@@ -34,7 +33,7 @@ const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
 // -sistema de pago--
 const  creaOCyDetalle  = require('../controllers/sistemaDePago/postOcDet.js'); 
 const  createPaymentPreference  = require("../controllers/sistemaDePago/paymentController.js");
-const  { handlePaymentNotification, receiveWebhook } = require("../controllers/paymentController.js");
+const  { handlePaymentNotification, receiveWebhook } = require("../controllers/sistemaDePago/paymentController.js");
 
 
 const router = Router();
