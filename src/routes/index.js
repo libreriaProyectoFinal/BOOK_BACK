@@ -5,9 +5,9 @@ const { obtenerLibros } = require('../controllers/libro/obtenerLibros.js');
 
 // ------------- matheus -----------------
 // -usuarios
-// const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+ const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // // -authLocal
-// const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
+ const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
 // ---------------------------------------
 // ----------------------- waldir ------------------
 // -libros
@@ -33,8 +33,9 @@ const  creaOCyDetalle  = require('../controllers/sistemaDePago/postOcDet.js');
 const  createPaymentPreference  = require("../controllers/sistemaDePago/paymentController.js");
 const  { handlePaymentNotification, receiveWebhook } = require("../controllers/sistemaDePago/paymentController.js");
 
-
 const router = Router();
+
+router.get("/obtenerGeneros", obtenerGeneros);
 
 //---------------sistema de pago
 router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
@@ -45,17 +46,17 @@ router.get('/obtenerLibros', obtenerLibros);
 router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 
 // ---------------- matheus ------------------
- // router.get("/usuarios", handlerTodosUsuarios);
- // router.get("/:idusuario", handlerUsuarioPorId);
- // router.post("/crearUsuario", handleCrearUsuario);
- // router.post("/login", autenticacionLocalUsuario);
+  router.get("/usuarios", handlerTodosUsuarios);
+  router.get("/:idusuario", handlerUsuarioPorId);
+  router.post("/crearUsuario", handleCrearUsuario);
+  router.post("/login", autenticacionLocalUsuario);
 // -------------------------------------------
 // ---------------- waldir -------------------
 router.delete("/borradoLibro/:idlibro", borradoLibro);
 router.put("/actualizarLibro/:idlibro", actualizarLibro);
 // -------------------------------------------
 // ---------------- felipe -------------------
-router.get("/obtenerGeneros", obtenerGeneros);
+
 router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
 router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
 router.get("/obtenerAutores", obtenerAutores);
