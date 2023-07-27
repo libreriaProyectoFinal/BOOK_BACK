@@ -6,7 +6,7 @@ const obtenerGeneros = async  (req, res) =>{
  try {
   const respuesta = await Genero.findAll(
    {
-    
+    attributes: ['idgenero', 'nombregenero'],
     order: [['nombregenero', 'ASC']],    
    }   
   );
