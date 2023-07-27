@@ -2,10 +2,12 @@ const { Router } = require('express');
 
 const { agregaLibro } = require('../controllers/libro/agregaLibro.js');
 const { obtenerLibros } = require('../controllers/libro/obtenerLibros.js');
-
+// -generos
+const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
+const { obtenerLibroPorGenero } = require('../controllers/generos/ObtenerLibroPorGenero.js');
 // ------------- matheus -----------------
 // -usuarios
-const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+// const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // -authLocal
 const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js');
 // -authGoogle
@@ -25,9 +27,7 @@ const { obtenerLibroPorId } = require('../controllers/libro/obtenerLibroPorId.js
 const { obtenerAutores } = require('../controllers/autores/obtenerAutores.js');
 const { obtenerAutorPorNombre } = require('../controllers/autores/obtenerAutorPorNombre.js');
 const { obtenerAutorPorId } = require('../controllers/autores/obtenerAutorPorId.js');
-// -generos
-const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
-const { obtenerLibroPorGenero } = require('../controllers/generos/ObtenerLibroPorGenero.js');
+
 // -----------------------------------------
 
 
