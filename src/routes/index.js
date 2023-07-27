@@ -27,6 +27,7 @@ const { obtenerAutorPorNombre } = require('../controllers/autores/obtenerAutorPo
 const { obtenerAutorPorId } = require('../controllers/autores/obtenerAutorPorId.js');
 // -generos
 const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
+
 //const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
 // -sistema de pago--
 const  creaOCyDetalle  = require('../controllers/sistemaDePago/postOcDet.js'); 
@@ -45,10 +46,10 @@ router.get('/obtenerLibros', obtenerLibros);
 router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 
 // ---------------- matheus ------------------
-//router.get("/usuarios", handlerTodosUsuarios);
-//router.get("/:idusuario", handlerUsuarioPorId);
-//router.post("/crearUsuario", handleCrearUsuario);
-//router.post("/login", autenticacionLocalUsuario);
+// router.get("/usuarios", handlerTodosUsuarios);
+// router.get("/:idusuario", handlerUsuarioPorId);
+// router.post("/crearUsuario", handleCrearUsuario);
+// router.post("/login", autenticacionLocalUsuario);
 // -------------------------------------------
 // ---------------- waldir -------------------
 router.delete("/borradoLibro/:idlibro", borradoLibro);
