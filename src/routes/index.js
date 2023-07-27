@@ -10,8 +10,6 @@ const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal
 // -authGoogle
 const { handlerAutenticacionGoogle } = require('../controllers/usuarioGoogle/handler/handlerAutenticacionGoogle.js');
  const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
-// // -authLocal
- const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
 // ---------------------------------------
 // ----------------------- waldir ------------------
 // -libros
@@ -24,6 +22,16 @@ const { borradoLibro } = require('../controllers/libro/borradoLibro.js');
 const { obtenerLibroPorId } = require('../controllers/libro/obtenerLibroPorId.js');
 const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPorTitulo.js');
 const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
+// ------------- matheus -----------------
+// -usuarios
+ //const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+// // -authLocal
+ //const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
+// ---------------------------------------
+// -libros
+const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
+const { borradoLibro } = require('../controllers/libro/borradoLibro.js');
+
 // -autores
 const { obtenerAutores } = require('../controllers/autores/obtenerAutores.js');
 const { obtenerAutorPorNombre } = require('../controllers/autores/obtenerAutorPorNombre.js');
@@ -41,6 +49,8 @@ const router = Router();
 // ------------ no mover esa ruta (felipe) ---------------
 
 router.get("/obtenerGeneros", obtenerGeneros);
+router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
+router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
 
 //---------------sistema de pago
 router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
@@ -66,8 +76,6 @@ router.put("/actualizarLibro/:idlibro", actualizarLibro);
 // -------------------------------------------
 // ---------------- felipe -------------------
 
-router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
-router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
 router.get("/obtenerAutores", obtenerAutores);
 router.get("/obtenerAutorNombre/:nombre", obtenerAutorPorNombre);
 router.get("/obtenerAutorId/:ida", obtenerAutorPorId); 
