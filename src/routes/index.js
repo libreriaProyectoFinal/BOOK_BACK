@@ -29,6 +29,7 @@ const { obtenerAutorPorNombre } = require('../controllers/autores/obtenerAutorPo
 const { obtenerAutorPorId } = require('../controllers/autores/obtenerAutorPorId.js');
 // -generos
 const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
+
 //const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
 // -sistema de pago--
 const  creaOCyDetalle  = require('../controllers/sistemaDePago/postOcDet.js'); 
