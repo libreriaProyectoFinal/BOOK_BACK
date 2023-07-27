@@ -33,6 +33,9 @@ const { obtenerLibroPorGenero } = require('../controllers/generos/ObtenerLibroPo
 
 
 const router = Router();
+// ------------ no mover esa ruta ---------------
+router.get("/obtenerGeneros", obtenerGeneros);
+// ----------------------------------------------
 
 router.post('/agregaLibro',agregaLibro );
 router.get('/obtenerLibros', obtenerLibros);
@@ -53,7 +56,6 @@ router.put("/actualizarLibro/:idlibro", actualizarLibro);
 // -------------------------------------------
 
 // ---------------- felipe -------------------
-router.get("/obtenerGeneros", obtenerGeneros);
 router.get("/obtenerLibroPorGenero/:genero", obtenerLibroPorGenero);
 router.get("/obtenerAutores", obtenerAutores);
 router.get("/obtenerAutorNombre/:nombre", obtenerAutorPorNombre);

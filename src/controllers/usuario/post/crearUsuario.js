@@ -33,7 +33,7 @@ const postCrearUsuario = async (name, password, email, nickname, picture, rol) =
     });
 
     // Vinculación con el tipo de usuario
-    console.log(TipoUsuario)
+    console.log("TipoUsuario: ", TipoUsuario )
     const tipoUsuario = await TipoUsuario.findOne({ where: { rol: rol } });
     if (tipoUsuario) {
         // console.log("----->rol: ", tipoUsuario.rol);
