@@ -17,15 +17,34 @@ const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPo
 // -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
 const { borradoLibro } = require('../controllers/libro/borradoLibro.js');
+// -------------------------------------------------
 
+// ------------------------- felipe ----------------
+// -libros
+const { obtenerLibroPorId } = require('../controllers/libro/obtenerLibroPorId.js');
+const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPorTitulo.js');
+const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
+
+
+// -autores
 const { obtenerAutores } = require('../controllers/autores/obtenerAutores.js');
 const { obtenerAutorPorNombre } = require('../controllers/autores/obtenerAutorPorNombre.js');
 const { obtenerAutorPorId } = require('../controllers/autores/obtenerAutorPorId.js');
 
 const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
 
+//const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
+
+// -----------------------------------------
+
+
+
 const router = Router();
 
+//---------------sistema de pago
+router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
+router.post("/create-order", createPaymentPreference );
+//-----------------------------
 router.post('/agregaLibro',agregaLibro );
 router.get('/obtenerLibros', obtenerLibros);
 router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
@@ -42,12 +61,10 @@ router.get("/obtenerLibroId/:idl", obtenerLibroPorId);
 //router.post("/login", autenticacionLocalUsuario);
 
 // -------------------------------------------
-
-// ---------------- waldir ------------------- 
+// ---------------- waldir -------------------
 router.delete("/borradoLibro/:idlibro", borradoLibro);
 router.put("/actualizarLibro/:idlibro", actualizarLibro);
 // -------------------------------------------
-
 // ---------------- felipe -------------------
 router.get("/obtenerGeneros", obtenerGeneros);
 router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
