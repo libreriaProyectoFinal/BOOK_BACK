@@ -1,6 +1,7 @@
 require("dotenv").config();
-const { Sequelize } = require("sequelize");
+const { Sequelize ,DataTypes,Op} = require("sequelize");
 const fs = require("fs");
+const pg = require('pg');
 const path = require("path");
 const pg = require('pg');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_URL} = process.env;
@@ -22,6 +23,7 @@ const sequelize = new Sequelize(
         // ------------------
     }
 );
+
 
 const basename = path.basename(__filename);
 
@@ -47,15 +49,37 @@ let capsEntries = entries.map(entry => [entry[0][0].toUpperCase() + entry[0].sli
 sequelize.models = Object.fromEntries(capsEntries);
 
 // Create the relationships between the models
-const { Libro, Genero, Usuario, TipoUsuario, Autor } = sequelize.models;
+const { Libro, Genero, Usuario, TipoUsuario, Autor, Oc, Detalleoc, Review } = sequelize.models;
 // console.log(sequelize.models);
 
 TipoUsuario.hasMany(Usuario)
 Usuario.belongsTo(TipoUsuario)
 
+Genero.hasMany(Libro)
+Libro.belongsTo(Genero)
+
+Libro.belongsTo(Autor)
+Autor.hasMany(Libro)
+
+Oc.belongsTo(Usuario)
+Usuario.hasMany(Oc)
+
+
+Detalleoc.belongsTo(Oc)
+Oc.hasMany(Detalleoc)
+
+Detalleoc.hasOne(Libro)
+Libro.belongsTo(Detalleoc)
+
+Review.belongsTo(Libro, {allowNull: true})
+Review.belongsTo(Oc, {allowNull: true})
+Review.belongsTo(Usuario)
+
+Libro.hasMany(Review)
+Oc.hasMany(Review)
+Usuario.hasMany(Review)
+
 module.exports = {
     ...sequelize.models, // Export the models 
-    conn: sequelize, // Export the connection
+    conn: sequelize, sequelize// Export the connection
 };
-
-

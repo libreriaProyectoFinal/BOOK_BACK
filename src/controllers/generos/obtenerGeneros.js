@@ -1,11 +1,12 @@
-// Controlador para obtener un producto por su ID
-const { Genero } = require('../../db');
+// Controlador para obtener un libro por su ID
+const { Genero } = require('../../db.js');
 
 const obtenerGeneros = async  (req, res) =>{
  //const  idg  = req.params.ida;
  try {
   const respuesta = await Genero.findAll(
    {
+    attributes: ['id', 'nombregenero'],
     order: [['nombregenero', 'ASC']],    
    }   
   );

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "repository": "https://github.com/libreriaProyectoFinal/BOOK_BACK.git",
   "author": "Libreria Proyecto Final libreriaproyectofinal@gmail.com",
@@ -19,7 +19,9 @@
     "express": "^4.18.2",
     "express-rate-limit": "^6.8.0",
     "google-auth-library": "^9.0.0",
+    "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.1",
+    "mercadopago": "^1.5.17",
     "morgan": "^1.10.0",
     "nodemailer": "^6.9.4",
     "pg": "^8.11.1",

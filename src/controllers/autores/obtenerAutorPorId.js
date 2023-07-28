@@ -1,5 +1,5 @@
-// Controlador para obtener un producto por su ID
-const { Autor } = require('../../db');
+// Controlador para obtener un libro por su ID
+const { Autor } = require('../../db.js');
 
 const obtenerAutorPorId = async  (req, res) =>{
  const  ida  = req.params.ida;
@@ -8,7 +8,7 @@ const obtenerAutorPorId = async  (req, res) =>{
   const respuesta = await Autor.findByPk( ida );
   if (!respuesta)
   {
-   return res.status(404).json({ mensaje: 'Auror no encontrado' });
+   return res.status(404).json({ mensaje: 'Autor no encontrado' });
   }
    res.json(respuesta);
    console.log(JSON.stringify(respuesta))
