@@ -10,8 +10,11 @@ async function obtenerLibros(req, res) {
     const { rows, count } = await Libro.findAndCountAll({
       limit: porPagina,
       offset,
-      include: [Autor, Genero]
-    });
+      include: [Autor, Genero],
+      where: {
+        esborrado: 0,
+      },
+  } );
 
     const totalPaginasx = Math.ceil(count / porPagina);
 

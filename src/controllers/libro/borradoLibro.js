@@ -6,7 +6,7 @@ const borradoLibro = async (req, res) => {
 
    // Buscar el libro por su id
    const libro = await Libro.findOne({
-    where: { idlibro },
+    where: { id:idlibro },
   });
 
   
@@ -33,7 +33,7 @@ const borradoLibro = async (req, res) => {
   const [numRowsUpdated, [updatedLibro]] = await Libro.update(
     { esborrado: 1 }, // Datos que se actualizarán
     {
-      where: { idlibro },
+      where: { id: idlibro },
       returning: true, // Devolver el registro actualizado
     }
   );
