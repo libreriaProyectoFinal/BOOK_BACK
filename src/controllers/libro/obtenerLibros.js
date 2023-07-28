@@ -1,4 +1,4 @@
-const { Libro, Genero } = require('../../db.js');
+const { Libro, Genero, Autor } = require('../../db.js');
 
 async function obtenerLibros(req, res) { 
   const pagina = parseInt(req.query.pagina) || 1;
@@ -9,7 +9,8 @@ async function obtenerLibros(req, res) {
     // Realizar la consulta con Sequelize usando las opciones limit y offset para la paginación
     const { rows, count } = await Libro.findAndCountAll({
       limit: porPagina,
-      offset
+      offset,
+      include: [Autor, Genero]
     });
 
     const totalPaginasx = Math.ceil(count / porPagina);

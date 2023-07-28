@@ -24,9 +24,9 @@ const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPo
 const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
 // ------------- matheus -----------------
 // -usuarios
- //const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // // -authLocal
- //const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
+const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
 // ---------------------------------------
 // -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
@@ -48,37 +48,37 @@ const  { handlePaymentNotification, receiveWebhook } = require("../controllers/s
 const router = Router();
 // ------------ no mover esa ruta (felipe) ---------------
 
-router.get("/obtenerGeneros", obtenerGeneros);
+
+// ---------------- libros ------------------
+router.post('/agregaLibro',agregaLibro );
+router.get('/obtenerLibros', obtenerLibros);
+router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
+router.delete("/borradoLibro/:idlibro", borradoLibro);
+router.put("/actualizarLibro/:idlibro", actualizarLibro);
+
+// ---------------- generos ------------------
+router.get("/obtenerGeneros", obtenerGeneros);
 router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
+
 
 //---------------sistema de pago
 router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
 router.post("/create-order", createPaymentPreference );
-//-----------------------------
-router.post('/agregaLibro',agregaLibro );
-router.get('/obtenerLibros', obtenerLibros);
-router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
-// ----------------------------------------------
 
-router.post('/agregaLibro',agregaLibro );
+// ---------------- usuarios y login ------------------
+ router.get("/usuarios", handlerTodosUsuarios);
+ router.get("/:idusuario", handlerUsuarioPorId);
+ router.post("/crearUsuario", handleCrearUsuario);
 
-// ---------------- matheus ------------------
-router.get("/usuarios", handlerTodosUsuarios);
-router.get("/:idusuario", handlerUsuarioPorId);
-router.post("/crearUsuario", handleCrearUsuario);
-router.post("/login", autenticacionLocalUsuario);
-router.post("/login/google", handlerAutenticacionGoogle);
-// -------------------------------------------
-// ---------------- waldir -------------------
-router.delete("/borradoLibro/:idlibro", borradoLibro);
-router.put("/actualizarLibro/:idlibro", actualizarLibro);
-// -------------------------------------------
-// ---------------- felipe -------------------
+ router.post("/login", autenticacionLocalUsuario);
 
+// ---------------- autor -------------------
 router.get("/obtenerAutores", obtenerAutores);
 router.get("/obtenerAutorNombre/:nombre", obtenerAutorPorNombre);
 router.get("/obtenerAutorId/:ida", obtenerAutorPorId); 
+
+// ---------------- estado api -------------------
 router.get('/', (req, res) => { res.send('¡Bienvenido a la API!');});
 // -------------------------------------------
 
