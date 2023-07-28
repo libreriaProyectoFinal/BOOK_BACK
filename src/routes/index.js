@@ -11,10 +11,7 @@ const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal
 const { handlerAutenticacionGoogle } = require('../controllers/usuarioGoogle/handler/handlerAutenticacionGoogle.js');
  const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // ---------------------------------------
-// ----------------------- waldir ------------------
-// -libros
-const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
-const { borradoLibro } = require('../controllers/libro/borradoLibro.js');
+
 // -------------------------------------------------
 
 // ------------------------- felipe ----------------
@@ -22,11 +19,7 @@ const { borradoLibro } = require('../controllers/libro/borradoLibro.js');
 const { obtenerLibroPorId } = require('../controllers/libro/obtenerLibroPorId.js');
 const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPorTitulo.js');
 const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
-// ------------- matheus -----------------
-// -usuarios
-const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
-// // -authLocal
-const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
+
 // ---------------------------------------
 // -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
