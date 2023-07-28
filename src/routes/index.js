@@ -54,12 +54,13 @@ router.post('/agregaLibro',agregaLibro );
 router.get('/obtenerLibros', obtenerLibros);
 router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
+router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
+
 router.delete("/borradoLibro/:idlibro", borradoLibro);
 router.put("/actualizarLibro/:idlibro", actualizarLibro);
 
 // ---------------- generos ------------------
 router.get("/obtenerGeneros", obtenerGeneros);
-router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
 
 
 //---------------sistema de pago
@@ -68,7 +69,7 @@ router.post("/create-order", createPaymentPreference );
 
 // ---------------- usuarios y login ------------------
  router.get("/usuarios", handlerTodosUsuarios);
- router.get("/:idusuario", handlerUsuarioPorId);
+ router.get("/usuarios/:idusuario", handlerUsuarioPorId);
  router.post("/crearUsuario", handleCrearUsuario);
 
  router.post("/login", autenticacionLocalUsuario);

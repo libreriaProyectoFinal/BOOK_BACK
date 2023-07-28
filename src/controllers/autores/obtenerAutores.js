@@ -1,4 +1,4 @@
-// Controlador para obtener un producto por su ID
+// Controlador para obtener un libro por su ID
 const { Autor } = require('../../db.js');
 
 const obtenerAutores = async  (req, res) =>{

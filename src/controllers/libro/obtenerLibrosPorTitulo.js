@@ -13,6 +13,9 @@ const obtenerLibrosPorTitulo = async (req, res) => {
       where: {       
         nombrelibro: {  [sequelize.Sequelize.Op.like]: `%${titulo}%`, },
       },
+      where: {
+        esborrado: 0,
+      },
       order: [['nombrelibro', 'ASC']],
       limit: librosPorPagina,
       offset

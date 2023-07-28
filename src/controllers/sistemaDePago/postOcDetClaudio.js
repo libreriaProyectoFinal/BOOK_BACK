@@ -13,8 +13,8 @@ const postOCyDetalle = async (req, res) => {
     // Insertar en la tabla "detalleoc" por cada objeto en "detalleocx"
 
     for (let i = 0; i < detalleocx.length; i++) {
-      const { idproducto, valorunitario, cant, subtotal } = detalleocx[i];
-      await Detalleoc.create({ idoc, idproducto, valorunitario, cant, subtotal  });
+      const { id, valorunitario, cant, subtotal } = detalleocx[i];
+      await Detalleoc.create({ idoc, id, valorunitario, cant, subtotal  });
     }
 
     return res.status(201).send((newOC));
