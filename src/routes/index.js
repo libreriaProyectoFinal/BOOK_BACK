@@ -7,9 +7,9 @@ const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPo
 const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
 // ------------- matheus -----------------
 // -usuarios
- //const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+// const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // // -authLocal
- //const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
+// const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js')
 // ---------------------------------------
 // -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
