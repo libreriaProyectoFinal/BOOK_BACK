@@ -3,7 +3,7 @@ const { Sequelize ,DataTypes,Op} = require("sequelize");
 const fs = require("fs");
 const pg = require('pg');
 const path = require("path");
-const pg = require('pg');
+
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_URL} = process.env;
 
 const sequelize = new Sequelize(
