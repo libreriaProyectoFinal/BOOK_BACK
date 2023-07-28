@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
 },
   nombrelibro: { type: DataTypes.STRING, allowNull: true, },
   desclibro: { type: DataTypes.STRING, allowNull: true, },
-  nombreautor: { type: DataTypes.STRING, allowNull: true, },
+  // nombreautor: { type: DataTypes.STRING, allowNull: true, },
   obslibro: { type: DataTypes.STRING, allowNull: true, },
   fotolibro: { type: DataTypes.STRING, allowNull: true, },
   preciolibro: { type: DataTypes.INTEGER, allowNull: true,  },
