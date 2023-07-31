@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
    nombrelibro: { type: DataTypes.STRING, allowNull: true, },
    valorunitario: { type: DataTypes.INTEGER, allowNull: true,  },
    cant: { type: DataTypes.INTEGER, allowNull: true,  },
-   subtotal: { type: DataTypes.STRING, allowNull: true,  },
+   subtotal: { type: DataTypes.INTEGER, allowNull: true,  },
    idoc: { type: DataTypes.STRING, allowNull: true,  }
   });
 };
