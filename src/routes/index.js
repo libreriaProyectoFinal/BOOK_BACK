@@ -57,8 +57,9 @@ router.get("/obtenerGeneros", obtenerGeneros);
 
 
 //---------------sistema de pago
-router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
-router.post("/create-order", createPaymentPreference );
+router.post("/generar-orden", creaOCyDetalle );   /**aqui oc y detalle OK  */
+router.post("/create-order", createPayment );
+router.post("/notifications", paymentNotif,);
 
 // ---------------- usuarios y login ------------------
  router.get("/usuarios", handlerTodosUsuarios);
