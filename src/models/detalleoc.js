@@ -7,11 +7,11 @@ module.exports = (sequelize) => {
     allowNull: false, 
     primaryKey: true,
   },
-  // idlibro: { type: DataTypes.INTEGER, allowNull: true, },
-  // nombrelibro: { type: DataTypes.STRING, allowNull: true, },
-  valorunitario: { type: DataTypes.INTEGER, allowNull: true,  },
-  cant: { type: DataTypes.INTEGER, allowNull: true,  },
-  subtotal: { type: DataTypes.STRING, allowNull: true,  },
-  // idoc: { type: DataTypes.INTEGER, allowNull: true,  }
+   idlibro: { type: DataTypes.STRING, allowNull: true, },
+   nombrelibro: { type: DataTypes.STRING, allowNull: true, },
+   valorunitario: { type: DataTypes.INTEGER, allowNull: true,  },
+   cant: { type: DataTypes.INTEGER, allowNull: true,  },
+   subtotal: { type: DataTypes.STRING, allowNull: true,  },
+   idoc: { type: DataTypes.STRING, allowNull: true,  }
   });
 };
