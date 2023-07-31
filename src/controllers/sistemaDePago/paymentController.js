@@ -1,37 +1,50 @@
 const { string } = require('joi');
-const { Usuario,  Oc, Detalleoc } = require('../../db.js');
+const { Usuario,  Oc, Detalleoc, Libro } = require('../../db.js');
 const mercadopago = require('mercadopago'); // Importa la configuración de Mercado Pago
 const nodemailer = require('nodemailer');
+const axios = require('axios');
 require("dotenv").config();
 const { ACCESS_TOKEN, GOOGLE_TOKEN } = process.env;
-eURL = "http://localhost:3001" ; 
+eURL    = "http://localhost:3001" ; 
+backURL = "http://190.100.208.178:3001";
 //eURL = "https://commerce-back-2025.up.railway.app" ;
 
 // Configurar las opciones de envío de correo electrónico
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'all.market.henry@gmail.com',
-    pass: GOOGLE_TOKEN,
+    user: 'libreriaproyectofinal@gmail.com',
+    pass: MAILER_PASSWORD,
   },
 });
-mercadopago.configure({
-  access_token: "TEST-4280842424471491-070211-516c8b20e0878a4ffcd8b1635fd20deb-1409292019", // Reemplaza con tu clave de acceso privada
+mercadopago.configure({  
+ access_token: "TEST-7245813158620870-072815-14435b04fc77bec4dcb8e07a5853d167-1434624699", // token del vendedor, prueba
 });
 
-const createPaymentPreference = async (req, res) => {
+const createPayment = async (req, res) => {
  try {
-   const { loginuserparam, idocparam } = req.body;    
-   console.log('SI ENTRA AL PAYMENT: ', 'user:', loginuserparam,'idoc:', idocparam);
+   // const { loginuserparam, idocparam } = req.body;    
+   const loginuserparam = req.query.login;
+   const idocparam = req.query.idoc;
+    // Validar que los valores no sean indefinidos
+    if (typeof loginuserparam === 'undefined' || typeof idocparam === 'undefined') {
+     return res.status(400).json({  error: 'Los parámetros login e idoc son requeridos.'  });
+   }
+   //console.log('SI ENTRA AL PAYMENT: ', 'user:', loginuserparam,'idoc:', idocparam);
 
-   const itemsx = await Detalleoc.findAll({  where: { idoc: idocparam }   });
+   const itemsx = await Detalleoc.findAll({  where: { ocId: idocparam }, include: [Libro]   });
    if (!itemsx) {  return res.status(404).json({ error: 'Detalle de OC NO encontrada' });    }
-   else {   console.log('Items de OC SI encontrada');  }
+   else {    
+          //  console.log('primer resp: ', itemsx +'.');
+               console.log('Items OC SI encontrada'); 
+         }
    
-   
-   const oc = await Oc.findOne({  where: { idoc: idocparam }   });
-   if (!oc) {  return res({ error: 'Orden compra NO encontrada' });    }
-   else {   console.log('ORDEN DE COMPRA SI ENCONTRADA: ', oc,'.');  }   
+   const oc = await Oc.findOne({  where: { id: idocparam }   });
+   if (!oc) {  return res({  error: 'Orden compra NO encontrada' }
+    );    
+  } else {   
+    console.log('ORDEN DE COMPRA SI ENCONTRADA: ', oc,'.'); 
+    }   
 
   const largarray = itemsx.length;
   console.log('ITEMS: ');
@@ -40,124 +53,66 @@ const createPaymentPreference = async (req, res) => {
   for (i=0; i < largarray ; i++){
     console.log( itemsx[i].dataValues);
     itemsa[i] =  itemsx[i].dataValues;
-    detallestring = detallestring + ', ' + itemsx[i].dataValues.nombrelibro;     
+    detallestring = detallestring + ', ' + itemsx[i].dataValues.libro.nombrelibro;     
   }
     detallestring = detallestring + '.';
-  const arrayObjt = [];
+   const arrayObjt = [];
 
-  for (i=0; i < largarray ; i++){
-   arrayObjt.push(
-                     {
-                      id:          itemsx[i].dataValues.idlibro,
-                      description: itemsx[i].dataValues.nombrelibro,
-                      title:       itemsx[i].dataValues.nombrelibro,
-                      unit_price:  itemsx[i].dataValues.preciolibro,
-                      quantity:    itemsx[i].dataValues.cantidad 
-                     }
-                     ) 
- }
-
-
+   for (i=0; i < largarray ; i++){
+    arrayObjt.push( 
+       {  title:       itemsx[i].dataValues.libro.nombrelibro,                                        
+          unit_price:  itemsx[i].dataValues.libro.preciolibro,
+          quantity:    itemsx[i].dataValues.libro.cantidad   }   ) 
+    }
   console.log('Items : ', arrayObjt+'..');
-
    const preference = {
     items: [
      {
-       title: detallestring,
-       unit_price: oc.valortotaloc,
-       quantity: 1,
+      title: detallestring + " ("+idocparam+")" ,
+      unit_price:  oc.valortotaloc,
+      currency_id:"CLP",
+      quantity : 1  
      },
      ],
-
-     payer: {
-       email: loginuserparam,
+     "payer": {
+      "email": loginuserparam ,
+      "phone": {
+       "area_code": "569-TROKTROK",
+       "number": Number(idocparam)
      },
-     notification_url: eURL+"/payment-notification",
-     external_reference: loginuserparam,
-     back_urls: {
-       success: eURL+"/success",
-       pending: eURL+"/pending",
-       failure: eURL+"/failure",
+      "identification": {
+       "type": "login",
+       "number": "FANTASY-12345"
      },
+      "address":  {
+       "street_name": "Fantasy Street",
+       "street_number": 123,
+       "zip_code": "FANTASY-ZIP",
+       "city": "Fantasy City",
+       "state": "Fantasy State",
+       "country": "Fantasy Country"
+     }
+    },
+    "back_urls": {
+     "success": backURL+"/success",
+     "failure": backURL+"/failure",
+     "pending": backURL+"/pending"
+    },
+    notification_url: backURL+"/notifications",
    };
-
+    /**AQUI CREO LA ORDEN COMPRA EN MERCADO PAGO INCRUSTANDO LOS ITEMS */
    const response = await mercadopago.preferences.create(preference);
    // Devolver la respuesta con la preferencia de pago generada
-   res.json(response.body);
+   console.log("Orden de compra creada!: ",response);
+   res.json(response.body); 
+   
+
+
  } catch (error) {
    console.error(error);
   // res.status(500).json({ error: error.message });
  }
 };
-
-const receiveWebhook = async (req, res) => {
-  try {
-    const payment = req.query;
-    console.log('payment: ', payment,'...');
-    if (payment.type === "payment") {
-      const data = await mercadopago.payment.findById(payment["data.id"]);
-      console.log(data);
-
-      // Verificar que el pago se haya realizado con éxito
-      if (data.status === 'approved') {
-        const usuarioId = parseInt(data.external_reference);
-        // Actualizar el estado del pago en la orden de compra en la base de datos
-        const orden = await Oc.findOne({ where: { loginuser: id } });
-        if (orden) {
-          await orden.update({ estado: 'aprobado' });
-        }
-      }
-    }
-
-    res.sendStatus(204);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({ error: error.message });
-  }
-};
- 
-
-const handlePaymentNotification = async (req, res) => {
-  try {
-    // Obtener la información de la notificación de pago de Mercado Pago
-    const { id, topic, resource } = req.body;
-
-    // Verificar que la notificación sea de pago exitoso
-    if (topic === 'payment' && resource.status === 'approved') {
-      // Obtener el ID del usuario desde la referencia externa
-      const usuarioId = parseInt(resource.external_reference);
-
-      // Utilizar receiveWebhook para obtener los datos de confirmación
-      const paymentData = await receiveWebhook({ query: { type: 'payment', 'data.id': id } });
-
-      // Verificar si el pago fue aprobado
-      if (paymentData.status === 'approved') {
-        // Buscar el usuario en la base de datos
-        const usuario = await Usuario.findByPk(usuarioId);
-
-        // Enviar correo electrónico de confirmación al usuario
-        const mailOptions = {
-          from: 'all.market.henry@gmail.com',
-          to: usuario.email,
-          subject: 'Confirmación de compra',
-          text: '¡Gracias por tu compra! Tu pago ha sido aprobado.',
-        };
-        transporter.sendMail(mailOptions, (error, info) => {
-          if (error) {  console.error(error);  } else {
-            console.log('Correo electrónico enviado:', info.response);
-          }
-        });
-        const orden = await OrdenCompra.findOne({ where: { idusuario: usuarioId } });
-        if (orden) {   await orden.update({ estado: 'aprobado' });  }
-      }
-    }
-
-    // Enviar una respuesta exitosa a Mercado Pago para confirmar la recepción de la notificación
-    res.sendStatus(200);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
-  }
-};
+/** este no se usa  */
    
-  module.exports =  createPaymentPreference, {receiveWebhook, handlePaymentNotification };
+  module.exports =  createPayment ;
