@@ -66,6 +66,7 @@ router.post("/create-order", createPaymentPreference );
  router.post("/crearUsuario", handleCrearUsuario);
 
  router.post("/login", autenticacionLocalUsuario);
+ router.post("/login/google", handlerAutenticacionGoogle);
 
 // ---------------- autor -------------------
 router.get("/obtenerAutores", obtenerAutores);
