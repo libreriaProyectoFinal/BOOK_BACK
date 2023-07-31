@@ -1,22 +1,25 @@
 const { OAuth2Client } = require('google-auth-library');
 
-const { crearUsuario } = require('../../usuario/post/crearUsuario');
+const { postCrearUsuario } = require('../../usuario/post/crearUsuario');
 const { generadorTokenDeAcceso } = require('../../../utils/generadorTokenDeAcceso');
 
 const { getUsuarioGooglePorEmail } = require('../../usuarioGoogle/get/getUsuarioGooglePorEmail');
-const { crearUsuarioGoogle } = require('../../usuarioGoogle/post/crearUsuarioGoogle');
-
-const { CLIENT_ID, CLIENT_SECRET } = process.env;
 
 
-const client = new OAuth2Client(CLIENT_ID, CLIENT_SECRET);
+const admin = require('firebase-admin');
+var serviceAccount = require("./libreriaproyectofinal-188c0-firebase-adminsdk-zmqxl-5c0d263dc8.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 
 // Interfaz del usuario
-const Usuario = {
-  id: '',
-  name: '',
-  email: ''
-};
+// const Usuario = {
+//   id: '',
+//   name: '',
+//   email: ''
+// };
 
 // Función para encontrar un usuario en mi base de datos
 async function findUsuarioPorEmail(usuarioEmail) {
@@ -43,17 +46,14 @@ async function handlerAutenticacionGoogle(req, res) {
     const { idToken } = req.body;
     console.log(idToken);
 
-    const ticket = await client.verifyIdToken({
-      idToken,
-      audience: CLIENT_ID,
-    });
+    const ticket =  await admin.auth().verifyIdToken(
+      idToken);
 
-    const payload = ticket.getPayload();
 
-    if (payload) {
-      const userId = payload.sub;
-      const userEmail = payload.email || '';
-      const userName = payload.name || '';
+    if (ticket) {
+      const userId = ticket.uid;
+      const userEmail = ticket.email || '';
+      const userName = ticket.name || '';
 
       // Verificar si el usuario ya existe en mi base de datos
       const existeUsuario = await findUsuarioPorEmail(userEmail);
@@ -72,7 +72,7 @@ async function handlerAutenticacionGoogle(req, res) {
         return;
       } else {
         // El usuario no existe, creao un nuevo usuario en tu base de datos o sistema
-        const nuevoUsuario = await postUser(
+        const nuevoUsuario = await postCrearUsuario(
           userName,
           'default', // -password
           userEmail,
@@ -81,7 +81,7 @@ async function handlerAutenticacionGoogle(req, res) {
           'usuario'  // -rol
         );
 
-        const token = await generateAccessToken(nuevoUsuario.id, 'usuario');
+        const token = await generadorTokenDeAcceso(nuevoUsuario.id, 'usuario');
 
         console.log(token);
 
