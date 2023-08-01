@@ -77,10 +77,10 @@ async function handlerAutenticacionGoogle(req, res) {
           'default', // -password
           userEmail,
           'default', // -nickname
-          'default', // -picture
+          'src/controllers/usuarioGoogle/handler/imagenDefaultGoogle.jpeg', // -picture
           'usuario'  // -rol
         );
-
+        
         const token = await generadorTokenDeAcceso(nuevoUsuario.id, 'usuario');
 
         console.log(token);
