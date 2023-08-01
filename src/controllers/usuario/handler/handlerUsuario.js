@@ -61,55 +61,55 @@ const handleCrearUsuario = async (req, res) => {
 // --------------------------------------------------- para el dashboard
 
 // Eliminar usuario
-// const handleDeleteUser = async (req, res) => {
-//   const userId = req.params.id;
-//   try {
-//     const deletedUser = await deleteUser(userId);
+const handlerUsuarioDeletado = async (req, res) => {
+  const usuarioId = req.params.id;
+  try {
+    const usuarioDeletado = await deleteUser(usuarioId);
 
-//     if (deletedUser) {
-//       res.status(200).json({ message: "Usuario eliminado." });
-//     } else {
-//       res.status(404).json({ message: "Usuario no encontrado." });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Error al eliminar al usuario." });
-//   }
-// };
+    if (usuarioDeletado) {
+      res.status(200).json({ message: "Usuario eliminado." });
+    } else {
+      res.status(404).json({ message: "Usuario no encontrado." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al eliminar al usuario." });
+  }
+};
 
 // Suspender usuario
-// const handleSuspendUser = async (req, res) => {
-//   const userId = req.params.id;
-//   try {
-//     const suspendedUser = await suspendUser(userId);
+const handlerUsuarioSuspendido= async (req, res) => {
+  const usuarioId = req.params.id;
+  try {
+    const usuarioSuspendido = await suspendUser(usuarioId);
 
-//     if (suspendedUser) {
-//       res.status(200).json({ message: "Usuario suspendido." });
-//     } else {
-//       res.status(404).json({ message: "Usuario no encontrado." });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Error al suspender al usuario." });
-//   }
-// };
+    if (usuarioSuspendido) {
+      res.status(200).json({ message: "Usuario suspendido." });
+    } else {
+      res.status(404).json({ message: "Usuario no encontrado." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al suspender al usuario." });
+  }
+};
 
-// // Quitar suspensión al usuario
-// const handleUnsuspendUser = async (req, res) => {
-//   const userId = req.params.id;
-//   try {
-//     const unSuspendedUser = await unSuspendUser(userId);
+// Quitar suspensión al usuario
+const handlerUsuarioSinSuspension = async (req, res) => {
+  const usuarioId = req.params.id;
+  try {
+    const usuarioSinSuspension = await unSuspendUser(usuarioId);
 
-//     if (unSuspendedUser) {
-//       res.status(200).json({ message: "Se quitó la suspensión del usuario." });
-//     } else {
-//       res.status(404).json({ message: "Usuario no encontrado." });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Error al quitar la suspensión." });
-//   }
-// };
+    if (usuarioSinSuspension) {
+      res.status(200).json({ message: "Se quitó la suspensión del usuario." });
+    } else {
+      res.status(404).json({ message: "Usuario no encontrado." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al quitar la suspensión." });
+  }
+};
 
 // ----------------------------------------- para el dashboard
 
@@ -118,7 +118,7 @@ module.exports = {
   handlerUsuarioPorId,
   handleUsuarioPorEmail,
   handleCrearUsuario,
-//   handleDeleteUser,
-//   handleSuspendUser,
-//   handleUnsuspendUser,
+  handlerUsuarioDeletado,
+  handlerUsuarioSuspendido,
+  handlerUsuarioSinSuspension,
 };

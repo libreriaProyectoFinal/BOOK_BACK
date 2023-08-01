@@ -4,14 +4,14 @@ const { agregaLibro } = require('../controllers/libro/agregaLibro.js');
 const { obtenerLibros } = require('../controllers/libro/obtenerLibros.js');
 
 // ------------- matheus -----------------
-
 // -authLocal
 const { autenticacionLocalUsuario } = require('../controllers/autenticacionLocal/autenticacionLocalUsuario.js');
 // -authGoogle
 const { handlerAutenticacionGoogle } = require('../controllers/usuarioGoogle/handler/handlerAutenticacionGoogle.js');
- const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
-// ---------------------------------------
-
+// -users
+const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
+// -quitar suspencion, supencion y deletar usuarios
+const { handlerUsuarioDeletado, handlerUsuarioSuspendido, handlerUsuarioSinSuspension } = require("../controllers/usuario/handler/handlerUsuario.js")
 // -------------------------------------------------
 
 // ------------------------- felipe ----------------
@@ -61,12 +61,16 @@ router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
 router.post("/create-order", createPaymentPreference );
 
 // ---------------- usuarios y login ------------------
- router.get("/usuarios", handlerTodosUsuarios);
- router.get("/usuarios/:idusuario", handlerUsuarioPorId);
- router.post("/crearUsuario", handleCrearUsuario);
-
- router.post("/login", autenticacionLocalUsuario);
- router.post("/login/google", handlerAutenticacionGoogle);
+router.get("/usuarios", handlerTodosUsuarios);
+router.get("/usuario/:idusuario", handlerUsuarioPorId);
+router.post("/crearUsuario", handleCrearUsuario);
+// -auth local y google
+router.post("/login", autenticacionLocalUsuario);
+router.post("/login/google", handlerAutenticacionGoogle);
+// -susp, unsusp, delete
+router.delete("/usuario/:id", handlerUsuarioDeletado);
+router.put("/usuario/:id/suspendido", handlerUsuarioSuspendido);
+router.put("/usuario/:id/nosuspendido", handlerUsuarioSinSuspension);
 
 // ---------------- autor -------------------
 router.get("/obtenerAutores", obtenerAutores);
