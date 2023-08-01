@@ -101,8 +101,6 @@ const createPayment = async (req, res) => {
    // Devolver la respuesta con la preferencia de pago generada
    console.log("Orden de compra creada!: ",response);
    res.json(response.body); 
-   
-
 
  } catch (error) {
    console.error(error);

@@ -61,9 +61,7 @@ const paymentNotif = async (req, res) => {
      const query = "SELECT idlibro, cant,nombrelibro, idoc FROM detalleocs WHERE idoc = '"+elCodigoOc+"' ";
      let itemsOc = await conn.query(query);     
 
-     console.log('resultado libros de la oc=  '+ elCodigoOc + ' es:  ', itemsOc,'  .');
-
-   
+     console.log('resultado libros de la oc=  '+ elCodigoOc + ' es:  ', itemsOc,'  .');   
       try {
         // Recorremos el array de objetos
         console.log('si entra itemsoc,' , itemsOc[0]);
@@ -77,23 +75,11 @@ const paymentNotif = async (req, res) => {
              let algo =  await conn.query(updateQuery, [cant, idlibro]);
              console.log('algo:',algo);
              }              
-          
-        }
-          
-        
-       // res.send('Actualización exitosa');
+       };
       } catch (error) {
         console.error('Error al actualizar los libros:', error);
-      //  res.status(500).send('Error al actualizar los libros');
-      }
-    
-
-     /**pongo eso en un array y despues recorro el array , para ir libro por libro */
-
-
-
-  
-
+      } 
+   
    }
    res.sendStatus(200);
  } catch (error) {
