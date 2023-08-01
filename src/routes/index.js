@@ -68,9 +68,9 @@ router.post("/crearUsuario", handleCrearUsuario);
 router.post("/login", autenticacionLocalUsuario);
 router.post("/login/google", handlerAutenticacionGoogle);
 // -susp, unsusp, delete
-router.delete("/usuario/:id", handlerUsuarioDeletado);
-router.put("/usuario/:id/suspendido", handlerUsuarioSuspendido);
-router.put("/usuario/:id/nosuspendido", handlerUsuarioSinSuspension);
+router.delete("/usuario/:idusuario", handlerUsuarioDeletado);
+router.put("/usuario/:idusuario/suspendido", handlerUsuarioSuspendido);
+router.put("/usuario/:idusuario/nosuspendido", handlerUsuarioSinSuspension);
 
 // ---------------- autor -------------------
 router.get("/obtenerAutores", obtenerAutores);

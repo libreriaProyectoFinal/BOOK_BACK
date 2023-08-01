@@ -7,6 +7,12 @@ const { getTipoUsuario } = require("../get/getTipoUsuario");
 const { postCrearUsuario } = require("../post/crearUsuario");
 // ------------------- post ------------------------
 
+const { deletarUsuario } = require("../delete/deleteUsuario")
+// ------------------- delet ------------------------
+
+const { suspenderUsuario, quitarSuspensionUsuario  } = require("../put/putUsuario")
+// ------------------- put --------------------------
+
 // Obtener todos los usuarios
 const handlerTodosUsuarios = async (req, res) => {
   try {
@@ -24,7 +30,7 @@ const handlerUsuarioPorId = async (req, res) => {
     const response = await getUsuarioPorId(idusuario);
     res.status(200).json(response);
   } catch (error) {
-    res.status(400).json({ message: error });
+    res.status(404).json({ message: error });
   }
 };
 
@@ -62,9 +68,9 @@ const handleCrearUsuario = async (req, res) => {
 
 // Eliminar usuario
 const handlerUsuarioDeletado = async (req, res) => {
-  const usuarioId = req.params.id;
   try {
-    const usuarioDeletado = await deleteUser(usuarioId);
+    const { idusuario } = req.params;
+    const usuarioDeletado = await deletarUsuario(idusuario);
 
     if (usuarioDeletado) {
       res.status(200).json({ message: "Usuario eliminado." });
@@ -79,9 +85,9 @@ const handlerUsuarioDeletado = async (req, res) => {
 
 // Suspender usuario
 const handlerUsuarioSuspendido= async (req, res) => {
-  const usuarioId = req.params.id;
   try {
-    const usuarioSuspendido = await suspendUser(usuarioId);
+    const { idusuario } = req.params;
+    const usuarioSuspendido = await suspenderUsuario(idusuario);
 
     if (usuarioSuspendido) {
       res.status(200).json({ message: "Usuario suspendido." });
@@ -96,9 +102,9 @@ const handlerUsuarioSuspendido= async (req, res) => {
 
 // Quitar suspensión al usuario
 const handlerUsuarioSinSuspension = async (req, res) => {
-  const usuarioId = req.params.id;
   try {
-    const usuarioSinSuspension = await unSuspendUser(usuarioId);
+    const { idusuario } = req.params;
+    const usuarioSinSuspension = await quitarSuspensionUsuario(idusuario);
 
     if (usuarioSinSuspension) {
       res.status(200).json({ message: "Se quitó la suspensión del usuario." });

@@ -10,12 +10,12 @@ module.exports = (sequelize) => {
     picture: {   type: DataTypes.STRING,  allowNull: true  },
     password: {  type: DataTypes.STRING, allowNull: true  },
     isActive: { type: DataTypes.BOOLEAN, defaultValue: true, allowNull: false },
-    deletedAt: { type: DataTypes.DATE, defaultValue: null,allowNull: true }
+
   },
     {
       sequelize,
       paranoid: true,
-      deletedAt: 'deletedAt',
+
     }
   );
 };
