@@ -5,8 +5,10 @@ const nodemailer = require('nodemailer');
 const axios = require('axios');
 require("dotenv").config();
 const { ACCESS_TOKEN, GOOGLE_TOKEN } = process.env;
-eURL    = "http://localhost:3001" ; 
+//eURL    = "http://localhost:3001" ; 
 backURL = "http://190.100.208.178:3001";
+//backURL = "http://localhost:3001";
+
 //eURL = "https://commerce-back-2025.up.railway.app" ;
 
 // Configurar las opciones de envío de correo electrónico
@@ -17,9 +19,7 @@ const transporter = nodemailer.createTransport({
     pass: GOOGLE_TOKEN,
   },
 });
-mercadopago.configure({  
- access_token: "TEST-7245813158620870-072815-14435b04fc77bec4dcb8e07a5853d167-1434624699", // token del vendedor, prueba
-});
+mercadopago.configure({ access_token: "TEST-7245813158620870-072815-14435b04fc77bec4dcb8e07a5853d167-1434624699", });
 
 const createPayment = async (req, res) => {
  try {
@@ -32,22 +32,17 @@ const createPayment = async (req, res) => {
    }
    //console.log('SI ENTRA AL PAYMENT: ', 'user:', loginuserparam,'idoc:', idocparam);
 
-   const itemsx = await Detalleoc.findAll({  where: { id: idocparam }   });
+   const itemsx = await Detalleoc.findAll({  where: { idoc: idocparam }   });
    if (!itemsx) {  return res.status(404).json({ error: 'Detalle de OC NO encontrada' });    }
-   else {    
-          //  console.log('primer resp: ', itemsx +'.');
-               console.log('Items OC SI encontrada'); 
-         }
+   else {   console.log('Items OC SI encontrada');   }
    
    const oc = await Oc.findOne({  where: { id: idocparam }   });
    if (!oc) {  return res({  error: 'Orden compra NO encontrada' }
     );    }
-   else {   
-    console.log('ORDEN DE COMPRA SI ENCONTRADA: ', oc,'.'); 
-    }   
+   else {    console.log('ORDEN DE COMPRA SI ENCONTRADA: ', oc,'.');   }   
 
   const largarray = itemsx.length;
-  console.log('ITEMS: ');
+  console.log('ITEMS: ', itemsx, '..');
   const itemsa =[];
   let detallestring = ' ';
   for (i=0; i < largarray ; i++){
@@ -69,7 +64,7 @@ const createPayment = async (req, res) => {
    const preference = {
     items: [
      {
-      title: detallestring + " ("+idocparam+")" ,
+      title: "Detalle: "+detallestring+" ." + " OrdenId: ("+idocparam+") .-" ,
       unit_price:  oc.valortotaloc,
       currency_id:"CLP",
       quantity : 1  
