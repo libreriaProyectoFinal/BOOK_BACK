@@ -10,7 +10,7 @@ module.exports = (sequelize) => {
   },
   fechahoraoc: { type: DataTypes.STRING, allowNull: true, },
   hashvalidacionpago: { type: DataTypes.STRING, allowNull: true, },
-  // loginuser: { type: DataTypes.STRING, allowNull: true,  },
+  loginuser: { type: DataTypes.STRING, allowNull: true,  },
   valortotaloc: { type: DataTypes.INTEGER, allowNull: true,  },
   estadooc: { type: DataTypes.STRING, allowNull: true,  }
   });
