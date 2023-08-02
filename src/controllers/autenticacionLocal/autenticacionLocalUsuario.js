@@ -32,7 +32,7 @@ const autenticacionLocalUsuario = async (req, res) => {
 
         console.log('----------->', nuevoUsuario, '<----------');
 
-        const token = await generadorTokenDeAcceso(nuevoUsuario.id);
+        const token = await generadorTokenDeAcceso(nuevoUsuario.idusuario, nuevoUsuario.tipoUsuario.rol);
 
         console.log("token :", token);
 
