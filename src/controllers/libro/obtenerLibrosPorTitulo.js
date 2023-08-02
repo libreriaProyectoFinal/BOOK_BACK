@@ -1,4 +1,5 @@
 const { sequelize, Libro } = require('../../db.js');
+const { Op } = require('sequelize');
 
 const obtenerLibrosPorTitulo = async (req, res) => {
 
@@ -10,8 +11,11 @@ const obtenerLibrosPorTitulo = async (req, res) => {
 
   try {
     const respuesta = await Libro.findAndCountAll({
-      where: {       
-        nombrelibro: {  [sequelize.Sequelize.Op.like]: `%${titulo}%`, },
+      where: {  
+        nombrelibro: {
+          [Op.like]: `%${titulo}%`,
+        },     
+        esborrado: 0,
       },
       order: [['nombrelibro', 'ASC']],
       limit: librosPorPagina,

@@ -9,7 +9,7 @@ const actualizarLibro = async (req, res) => {
 
   try {
     // Buscar el libro en la base de datos por su idlibro
-    const libro = await Libro.findByPk(idlibro);
+    const libro = await Libro.findByPk(idlibro, {include: [Autor, Genero]});
 
     if (!libro) {
       // Si el libro no se encuentra, devuelve un error

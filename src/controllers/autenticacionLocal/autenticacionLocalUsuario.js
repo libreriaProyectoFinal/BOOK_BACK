@@ -14,6 +14,8 @@ const autenticacionLocalUsuario = async (req, res) => {
 
         if (!user) {
             return res.status(401).json({ error: 'Credenciales inválidas' });
+        } else if (!user.isActive){
+            return res.status(401).json({ error: 'Credenciales inválidas' });
         }
 
         // Comparar la contraseña ingresada con el hash de la contraseña almacenada
@@ -30,7 +32,7 @@ const autenticacionLocalUsuario = async (req, res) => {
 
         console.log('----------->', nuevoUsuario, '<----------');
 
-        const token = await generadorTokenDeAcceso(nuevoUsuario.id);
+        const token = await generadorTokenDeAcceso(nuevoUsuario.idusuario, nuevoUsuario.tipoUsuario.rol);
 
         console.log("token :", token);
 
