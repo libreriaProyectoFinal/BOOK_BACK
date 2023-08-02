@@ -41,8 +41,6 @@ const  createPaymentPreference  = require("../controllers/sistemaDePago/paymentC
 const  { handlePaymentNotification, receiveWebhook } = require("../controllers/sistemaDePago/paymentController.js");
 
 const router = Router();
-// ------------ no mover esa ruta (felipe) ---------------
-
 
 // ---------------- libros ------------------
 router.post('/agregaLibro', autenticacionMiddlewareAdmin, agregaLibro ); // -auth admin
@@ -51,28 +49,28 @@ router.get("/obtenerLibroId/:idl", obtenerLibroPorId);
 router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
 router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
 
-router.delete("/borradoLibro/:idlibro", borradoLibro); // -auth admin
-router.put("/actualizarLibro/:idlibro", actualizarLibro); // -auth admin
+router.delete("/borradoLibro/:idlibro", autenticacionMiddlewareAdmin, borradoLibro); // -auth admin
+router.put("/actualizarLibro/:idlibro", autenticacionMiddlewareAdmin, actualizarLibro); // -auth admin
 
 // ---------------- generos ------------------
 router.get("/obtenerGeneros", obtenerGeneros);
 
 
 //---------------sistema de pago
-router.post('/generar-orden', creaOCyDetalle ); // -auth  /**aqui oc y detalle OK  */
-router.post("/create-order", createPaymentPreference ); // -auth
+router.post('/generar-orden', autenticacionMiddleware, creaOCyDetalle ); // -auth  /**aqui oc y detalle OK  */
+router.post("/create-order", createPaymentPreference );
 
 // ---------------- usuarios y login ------------------
-router.get("/usuarios", handlerTodosUsuarios); // -auth admin
-router.get("/usuario/:idusuario", handlerUsuarioPorId); // -auth
+router.get("/usuarios", autenticacionMiddlewareAdmin, handlerTodosUsuarios); // -auth admin
+router.get("/usuario/:idusuario", autenticacionMiddleware, handlerUsuarioPorId); // -auth
 router.post("/crearUsuario", handleCrearUsuario);
 // -auth local y google
 router.post("/login", autenticacionLocalUsuario);
 router.post("/login/google", handlerAutenticacionGoogle);
 // -susp, unsusp, delete
-router.delete("/usuario/:idusuario", handlerUsuarioDeletado); // -auth admin
-router.put("/usuario/:idusuario/suspendido", handlerUsuarioSuspendido); // -auth admin
-router.put("/usuario/:idusuario/nosuspendido", handlerUsuarioSinSuspension); // -auth admin
+router.delete("/usuario/:idusuario", autenticacionMiddlewareAdmin, handlerUsuarioDeletado); // -auth admin
+router.put("/usuario/:idusuario/suspendido", autenticacionMiddlewareAdmin, handlerUsuarioSuspendido); // -auth admin
+router.put("/usuario/:idusuario/nosuspendido", autenticacionMiddlewareAdmin, handlerUsuarioSinSuspension); // -auth admin
 
 // ---------------- autor -------------------
 router.get("/obtenerAutores", obtenerAutores);
