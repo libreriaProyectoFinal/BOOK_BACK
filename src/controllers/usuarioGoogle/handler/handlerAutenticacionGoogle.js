@@ -77,11 +77,11 @@ async function handlerAutenticacionGoogle(req, res) {
           'default', // -password
           userEmail,
           'default', // -nickname
-          'src/controllers/usuarioGoogle/handler/imagenDefaultGoogle.jpeg', // -picture
+          'https://img.freepik.com/vector-premium/icono-circulo-usuario-anonimo-ilustracion-vector-estilo-plano-sombra_520826-1931.jpg', // -picture
           'usuario'  // -rol
         );
         
-        const token = await generadorTokenDeAcceso(nuevoUsuario.id, 'usuario');
+        const token = await generadorTokenDeAcceso(nuevoUsuario.idusuario, 'usuario');
 
         console.log(token);
 

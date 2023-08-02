@@ -11,7 +11,9 @@ const { handlerAutenticacionGoogle } = require('../controllers/usuarioGoogle/han
 // -users
 const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = require("../controllers/usuario/handler/handlerUsuario.js");
 // -quitar suspencion, supencion y deletar usuarios
-const { handlerUsuarioDeletado, handlerUsuarioSuspendido, handlerUsuarioSinSuspension } = require("../controllers/usuario/handler/handlerUsuario.js")
+const { handlerUsuarioDeletado, handlerUsuarioSuspendido, handlerUsuarioSinSuspension } = require("../controllers/usuario/handler/handlerUsuario.js");
+// -protecion rutas
+const { autenticacionMiddleware, autenticacionMiddlewareAdmin } = require("../utils/autenticacionMiddleware.js");
 // -------------------------------------------------
 
 // ------------------------- felipe ----------------
@@ -43,34 +45,34 @@ const router = Router();
 
 
 // ---------------- libros ------------------
-router.post('/agregaLibro',agregaLibro );
+router.post('/agregaLibro', autenticacionMiddlewareAdmin, agregaLibro ); // -auth admin
 router.get('/obtenerLibros', obtenerLibros);
 router.get("/obtenerLibroId/:idl", obtenerLibroPorId); 
 router.get("/obtenerLibrosPorTitulo", obtenerLibrosPorTitulo);
 router.get("/obtenerLibrosPorGenero", obtenerLibrosPorGenero);
 
-router.delete("/borradoLibro/:idlibro", borradoLibro);
-router.put("/actualizarLibro/:idlibro", actualizarLibro);
+router.delete("/borradoLibro/:idlibro", borradoLibro); // -auth admin
+router.put("/actualizarLibro/:idlibro", actualizarLibro); // -auth admin
 
 // ---------------- generos ------------------
 router.get("/obtenerGeneros", obtenerGeneros);
 
 
 //---------------sistema de pago
-router.post('/generar-orden', creaOCyDetalle );   /**aqui oc y detalle OK  */
-router.post("/create-order", createPaymentPreference );
+router.post('/generar-orden', creaOCyDetalle ); // -auth  /**aqui oc y detalle OK  */
+router.post("/create-order", createPaymentPreference ); // -auth
 
 // ---------------- usuarios y login ------------------
-router.get("/usuarios", handlerTodosUsuarios);
-router.get("/usuario/:idusuario", handlerUsuarioPorId);
+router.get("/usuarios", handlerTodosUsuarios); // -auth admin
+router.get("/usuario/:idusuario", handlerUsuarioPorId); // -auth
 router.post("/crearUsuario", handleCrearUsuario);
 // -auth local y google
 router.post("/login", autenticacionLocalUsuario);
 router.post("/login/google", handlerAutenticacionGoogle);
 // -susp, unsusp, delete
-router.delete("/usuario/:idusuario", handlerUsuarioDeletado);
-router.put("/usuario/:idusuario/suspendido", handlerUsuarioSuspendido);
-router.put("/usuario/:idusuario/nosuspendido", handlerUsuarioSinSuspension);
+router.delete("/usuario/:idusuario", handlerUsuarioDeletado); // -auth admin
+router.put("/usuario/:idusuario/suspendido", handlerUsuarioSuspendido); // -auth admin
+router.put("/usuario/:idusuario/nosuspendido", handlerUsuarioSinSuspension); // -auth admin
 
 // ---------------- autor -------------------
 router.get("/obtenerAutores", obtenerAutores);
