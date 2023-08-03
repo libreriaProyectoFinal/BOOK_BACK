@@ -1,5 +1,5 @@
 const { string } = require('joi');
-const { Oc, Detalleoc } = require('../../db.js');
+const { Oc, Detalleoc, Libro } = require('../../db.js');
 const mercadopago = require('mercadopago'); // Importa la configuración de Mercado Pago
 const nodemailer = require('nodemailer');
 const axios = require('axios');
@@ -30,14 +30,16 @@ const createPayment = async (req, res) => {
    }
    //console.log('SI ENTRA AL PAYMENT: ', 'user:', loginuserparam,'idoc:', idocparam);
 
-   const itemsx = await Detalleoc.findAll({  where: { idoc: idocparam }   });
-   if (!itemsx) {  return res.status(404).json({ error: 'Detalle de OC NO encontrada' });    }
-   else {   console.log('Items OC SI encontrada');   }
-   
-   const oc = await Oc.findOne({  where: { id: idocparam }   });
+   const oc = await Oc.findOne({  where: { id: idocparam }, include: [Detalleoc]   });
    if (!oc) {  return res({  error: 'Orden compra NO encontrada' }
-    );    }
-   else {    console.log('ORDEN DE COMPRA SI ENCONTRADA: ', oc,'.');   }   
+    ); } else {    console.log('ORDEN DE COMPRA SI ENCONTRADA: ', oc,'.');   } 
+
+   const itemsx = await oc.getDetalleocs({include: [{model: Libro,
+    as: 'libro',}]});
+
+   if (!itemsx) {  return res.status(404).json({ error: 'Detalle de OC NO encontrada' });    }
+  
+     
 
   const largarray = itemsx.length;
   console.log('ITEMS: ', itemsx, '..');
@@ -46,7 +48,7 @@ const createPayment = async (req, res) => {
   for (i=0; i < largarray ; i++){
     console.log( itemsx[i].dataValues);
     itemsa[i] =  itemsx[i].dataValues;
-    detallestring = detallestring + ', ' + itemsx[i].dataValues.nombrelibro;     
+    detallestring = detallestring + ', ' + itemsx[i].dataValues.libro.nombrelibro;     
   }
     detallestring = detallestring + '.';
    const arrayObjt = [];
@@ -54,9 +56,9 @@ const createPayment = async (req, res) => {
    for (i=0; i < largarray ; i++){
     arrayObjt.push( 
        {   
-          title:       itemsx[i].dataValues.nombrelibro,                                        
-          unit_price:  itemsx[i].dataValues.preciolibro,
-          quantity:    itemsx[i].dataValues.cantidad   }   ) 
+          title:       itemsx[i].dataValues.libro.nombrelibro,                                        
+          unit_price:  itemsx[i].dataValues.libro.preciolibro,
+          quantity:    itemsx[i].dataValues.libro.cantidad   }   ) 
     }
   console.log('Items : ', arrayObjt+'..');
    const preference = {

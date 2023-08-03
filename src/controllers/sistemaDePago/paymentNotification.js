@@ -1,4 +1,4 @@
-const { Oc, conn } = require('../../db.js');
+const { Oc, Libro, Detalleoc } = require('../../db.js');
 const axios = require('axios');
 
 const paymentNotif = async (req, res) => {
@@ -24,7 +24,7 @@ const paymentNotif = async (req, res) => {
     }
    };
    let match = 0;
-   let elCodigoOc = "";
+   let elCodigoOc = "5bca1366-dbdb-499c-82c0-f043d8de05b1";
    let statusfinal = "";
    const algoresponde = await axios.get(urld, config).then(response => {
      console.log('Respuesta al TOKEN:', response.data,' data ');
@@ -45,40 +45,48 @@ const paymentNotif = async (req, res) => {
     } else {  console.log("No se encontró ningún paréntesis."); }     
   
   }).catch(error => { console.error('Error al hacer la solicitud:', error);  });  
-    console.log("FIN", " OK -> a cambiar la oc." );
-       try {
-        var orden = await Oc.findOne({
-          where: { id: elCodigoOc }
-        });
-        if (orden) {
-          await orden.update({ estadooc: statusfinal }); 
-        }
-       } catch (error) { 
-          console.error('Error al buscar o actualizar la orden:', error);
-        }
-   /** aqui debo de ir a buscar las cantidades de cada item tengo el idoc*/
-   /**debo ir al detalle oc y traeme cada idlibro  */
-     const query = "SELECT idlibro, cant,nombrelibro, idoc FROM detalleocs WHERE idoc = '"+elCodigoOc+"' ";
-     let itemsOc = await conn.query(query);     
 
-     console.log('resultado libros de la oc=  '+ elCodigoOc + ' es:  ', itemsOc,'  .');   
-      try {
-        // Recorremos el array de objetos
-        console.log('si entra itemsoc,' , itemsOc[0]);
-        for (const libro of itemsOc[0]) {
-          const { idlibro, cant } = libro;
-          if (idlibro && cant !== undefined) {
-           console.log('cant:',cant,'id:', idlibro ,'.')
-            // Consulta para actualizar la columna 'dispLibro' en la tabla 'libro'
-            // Reemplaza 'libro' por el nombre de tu tabla y 'dispLibro' por el nombre de tu columna de disponibilidad.
-            const updateQuery = "UPDATE libros SET displibro = ( displibro - "+cant+" ) WHERE id = '"+idlibro+"'  ";
-             let algo =  await conn.query(updateQuery, [cant, idlibro]);
-             console.log('algo:',algo);
-             }              
-       };
-      } catch (error) {
-        console.error('Error al actualizar los libros:', error);
-      } 
+  console.log("FIN", " OK -> a cambiar la oc." );
+  var orden = await Oc.findOne({
+    where: { id: elCodigoOc }
+  });
+  try {
+    if (orden) {
+      await orden.update({ estadooc: statusfinal }); 
+    } else {
+      throw new Error("Oc no encontrado")
+    }
+  } catch (error) { 
+    console.error('Error al buscar o actualizar la orden:', error);
+  }
+
+  // Luego, busca los Detalleoc asociados al Oc especial, incluyendo la relación con el modelo Libro
+  const detalleocs =await orden.getDetalleocs({include: [{model: Libro,
+    as: 'libro',}]});
+
+  // Ahora, puedes acceder a los libros asociados a los Detalleoc del Oc especial  
+
+
+
+  console.log('resultado libros de la oc=  '+ elCodigoOc + ' es:  ', detalleocs,'  .');   
+  try {
+    // Recorremos el array de objetos
+    for (const detalle of detalleocs) {
+      const {idLibro } = detalle.dataValues;
+      const {cant} = detalle.dataValues
+      console.log('cant:',cant,'id:', idLibro ,'.')
+      if ((idLibro !== undefined) && (cant !== undefined)) {
+        console.log('cant:',cant,'id:', idLibro ,'.')
+        // Consulta para actualizar la columna 'dispLibro' en la tabla 'libro'
+        // Reemplaza 'libro' por el nombre de tu tabla y 'dispLibro' por el nombre de tu columna de disponibilidad.
+        const libro = await Libro.findByPk(idLibro)
+        libro.displibro = libro.displibro - cant;
+        await libro.save();       
+      }
+    }
+  } catch (error) {
+    console.error('Error al actualizar los libros:', error);
+  } 
    
    }
    res.sendStatus(200);
