@@ -93,7 +93,7 @@ const createPayment = async (req, res) => {
      "failure": URL_BACK+"/failure",
      "pending": URL_BACK+"/pending"
     },
-    notification_url: backURL+"/notifications",
+    notification_url: URL_BACK+"/notifications",
    };
     /**AQUI CREO LA ORDEN COMPRA EN MERCADO PAGO INCRUSTANDO LOS ITEMS */
    const response = await mercadopago.preferences.create(preference);
