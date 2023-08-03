@@ -61,6 +61,7 @@ Libro.belongsTo(Genero)
 Libro.belongsTo(Autor)
 Autor.hasMany(Libro)
 
+
 Oc.belongsTo(Usuario)
 Usuario.hasMany(Oc)
 
@@ -71,6 +72,7 @@ Oc.hasMany(Detalleoc)
 Libro.hasMany(Detalleoc, { as: 'detalleocs', foreignKey: 'idLibro' })
 Detalleoc.belongsTo(Libro, { as: 'libro', foreignKey: 'idLibro' });
 
+
 Review.belongsTo(Libro, {allowNull: true})
 Review.belongsTo(Oc, {allowNull: true})
 Review.belongsTo(Usuario)
@@ -78,6 +80,7 @@ Review.belongsTo(Usuario)
 Libro.hasMany(Review)
 Oc.hasMany(Review)
 Usuario.hasMany(Review)
+
 
 module.exports = {
     ...sequelize.models, // Export the models 

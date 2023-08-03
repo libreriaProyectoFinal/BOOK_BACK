@@ -36,9 +36,9 @@ const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
 
 //const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
 // -sistema de pago--
-const  creaOCyDetalle  = require('../controllers/sistemaDePago/postOcDet.js'); 
-const  createPaymentPreference  = require("../controllers/sistemaDePago/paymentController.js");
-const  { handlePaymentNotification, receiveWebhook } = require("../controllers/sistemaDePago/paymentController.js");
+const  creaOCyDetalle = require('../controllers/sistemaDePago/postOcDet.js'); 
+const  createPayment  = require("../controllers/sistemaDePago/paymentController.js");
+const  paymentNotif   = require("../controllers/sistemaDePago/paymentNotification.js");
 
 const router = Router();
 
@@ -57,8 +57,9 @@ router.get("/obtenerGeneros", obtenerGeneros);
 
 
 //---------------sistema de pago
-router.post('/generar-orden', autenticacionMiddleware, creaOCyDetalle ); // -auth  /**aqui oc y detalle OK  */
-router.post("/create-order", createPaymentPreference );
+router.post("/generar-orden", autenticacionMiddleware, creaOCyDetalle );   /**aqui oc y detalle OK  */
+router.post("/create-order", createPayment );
+router.post("/notifications", paymentNotif,);
 
 // ---------------- usuarios y login ------------------
 router.get("/usuarios", autenticacionMiddlewareAdmin, handlerTodosUsuarios); // -auth admin
