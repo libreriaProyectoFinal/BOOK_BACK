@@ -4,9 +4,8 @@ const mercadopago = require('mercadopago'); // Importa la configuración de Merc
 const nodemailer = require('nodemailer');
 const axios = require('axios');
 require("dotenv").config();
-const { MAILER_PASSWORD } = process.env;
+const { MAILER_PASSWORD, URL_BACK } = process.env;
 
-backURL = "https://book-back.vercel.app";
 
 
 // Configurar las opciones de envío de correo electrónico
@@ -90,9 +89,9 @@ const createPayment = async (req, res) => {
      }
     },
     "back_urls": {
-     "success": backURL+"/success",
-     "failure": backURL+"/failure",
-     "pending": backURL+"/pending"
+     "success": URL_BACK+"/success",
+     "failure": URL_BACK+"/failure",
+     "pending": URL_BACK+"/pending"
     },
     notification_url: backURL+"/notifications",
    };

@@ -34,24 +34,23 @@ const postOCyDetalle = async (req, res) => {
 
     // Insertar en la tabla "detalleoc" por cada objeto en "detalleocx"
     for (let i = 0; i < detalleocx.length; i++) {
-      const { idlibro, valorunitario, cant, subtotal } = detalleocx[i];
+      const { idlibro, cant, subtotal } = detalleocx[i];
 
       const libro = await Libro.findByPk(idlibro)
+      console.log(libro)
       if(!libro){
         throw new Error("Libro no existe")
-
-      } else if (libro.dispLibro < cant) {
+      } else if (libro && (libro.dataValues.displibro < cant)) {
         console.log("Libro no disponible en el stock");
 
       } else {
+        const detail= await Detalleoc.create({cant, subtotal });
+    
+        detail.setLibro(libro);
+        await detail.save()
 
-      const detail= await Detalleoc.create({valorunitario, cant, subtotal });
-  
-      detail.setLibro(libro);
-      await detail.save()
-
-      newOC.addDetalleoc(detail)
-      await newOC.save()
+        newOC.addDetalleoc(detail)
+        await newOC.save()
       }
     }
     
@@ -60,6 +59,7 @@ const postOCyDetalle = async (req, res) => {
 
 /** */
     const urlx = URL_BACK+"/create-order?login="+loginuser+"&idoc="+idoc+"  ";
+    //const urlx = "http://localhost:3001"+"/create-order?login="+loginuser+"&idoc="+idoc+"  ";
     try{  
       // let response = await axios.post(urlx, bodyx);       
       let response = await axios.post(urlx); /**create-order por axios */

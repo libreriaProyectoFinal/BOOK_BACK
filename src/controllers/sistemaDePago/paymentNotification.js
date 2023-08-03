@@ -24,7 +24,7 @@ const paymentNotif = async (req, res) => {
     }
    };
    let match = 0;
-   let elCodigoOc = "5bca1366-dbdb-499c-82c0-f043d8de05b1";
+   let elCodigoOc = "";
    let statusfinal = "";
    const algoresponde = await axios.get(urld, config).then(response => {
      console.log('Respuesta al TOKEN:', response.data,' data ');
@@ -65,7 +65,6 @@ const paymentNotif = async (req, res) => {
     as: 'libro',}]});
 
   // Ahora, puedes acceder a los libros asociados a los Detalleoc del Oc especial  
-
 
 
   console.log('resultado libros de la oc=  '+ elCodigoOc + ' es:  ', detalleocs,'  .');   
