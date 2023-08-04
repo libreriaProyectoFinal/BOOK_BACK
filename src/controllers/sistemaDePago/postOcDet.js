@@ -15,6 +15,7 @@ const postOCyDetalle = async (req, res) => {
     /**aqui creo la oc en la BD */
 
     const usuario = await getUsuarioPorEmail(loginuser)
+    console.log("Logged user" + usuario)
 
     if(!usuario){
       throw new Error("Usuario no existe")
@@ -25,7 +26,9 @@ const postOCyDetalle = async (req, res) => {
 
     newOC.setUsuario(usuario)
 
-    newOC.save()
+    await newOC.save()
+
+    console.log("usuario in oc" + newOC)
 
     // Obtener el idoc generado para la OC recién insertada
     const idoc = newOC.id;
