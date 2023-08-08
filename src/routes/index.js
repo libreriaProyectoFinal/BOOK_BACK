@@ -16,29 +16,28 @@ const { handlerUsuarioDeletado, handlerUsuarioSuspendido, handlerUsuarioSinSuspe
 const { autenticacionMiddleware, autenticacionMiddlewareAdmin } = require("../utils/autenticacionMiddleware.js");
 // -------------------------------------------------
 
+// ----------------- matheus + felipe (arreglado y terminado por matheus) --------------
+// -sistema de pago--
+const  creaOCyDetalle = require('../controllers/sistemaDePago/postOcDet.js'); 
+const  createPayment  = require("../controllers/sistemaDePago/paymentController.js")
+const  receiveWebhook = require("../controllers/sistemaDePago/paymentController.js")
+const  paymentNotif   = require("../controllers/sistemaDePago/paymentNotification.js");
+// -------------------------------------------------------------------------------------
+
 // ------------------------- felipe ----------------
 // -libros
 const { obtenerLibroPorId } = require('../controllers/libro/obtenerLibroPorId.js');
 const { obtenerLibrosPorTitulo } = require('../controllers/libro/obtenerLibrosPorTitulo.js');
 const { obtenerLibrosPorGenero } = require('../controllers/libro/obtenerLibrosPorGenero.js');
-
-// ---------------------------------------
-// -libros
 const { actualizarLibro } = require('../controllers/libro/actualizarLibro.js');
 const { borradoLibro } = require('../controllers/libro/borradoLibro.js');
-
 // -autores
 const { obtenerAutores } = require('../controllers/autores/obtenerAutores.js');
 const { obtenerAutorPorNombre } = require('../controllers/autores/obtenerAutorPorNombre.js');
 const { obtenerAutorPorId } = require('../controllers/autores/obtenerAutorPorId.js');
 // -generos
-const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
-
 //const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
-// -sistema de pago--
-const  creaOCyDetalle = require('../controllers/sistemaDePago/postOcDet.js'); 
-const  createPayment  = require("../controllers/sistemaDePago/paymentController.js");
-const  paymentNotif   = require("../controllers/sistemaDePago/paymentNotification.js");
+const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
 
 const router = Router();
 
@@ -56,9 +55,13 @@ router.put("/actualizarLibro/:idlibro", autenticacionMiddlewareAdmin, actualizar
 router.get("/obtenerGeneros", obtenerGeneros);
 
 
-//---------------sistema de pago
+//---------------sistema de pago --------------------
 router.post("/generar-orden", autenticacionMiddleware, creaOCyDetalle );   /**aqui oc y detalle OK  */
 router.post("/create-order", createPayment );
+
+router.get("/success", (req, res) => res.send("success"));
+router.get("/failure", (req, res) => res.send("failure"));
+router.get("/pending", (req, res) => res.send("pending"));
 router.post("/notifications", paymentNotif,);
 
 // ---------------- usuarios y login ------------------
