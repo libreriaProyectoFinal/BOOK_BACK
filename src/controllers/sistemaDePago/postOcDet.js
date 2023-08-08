@@ -1,21 +1,28 @@
 const { Oc, Detalleoc, Usuario, Libro } = require('../../db.js');
 
 const axios = require('axios');
-const { getUsuarioPorEmail } = require('../usuario/get/getUsuarioPorEmail.js');
 
-const dummy1 = { "loginuser":"felipebaranao31@yahoo.com", "idoc":2 };
+const { getUsuarioPorId } = require('../usuario/get/getUsuarioPorId.js');
+
 const { URL_BACK } = process.env;
 
 const postOCyDetalle = async (req, res) => {
-  const { loginuser, hashvalidacionpago, valortotaloc,estadooc, detalleocx } = req.body;
+  const { hashvalidacionpago, valortotaloc,estadooc, detalleocx } = req.body;
   console.log('req.body: ',req.body ,'..');
   try {
     const fechahoraocaux = new Date();
     const fechahoraoc = fechahoraocaux.toISOString();
     /**aqui creo la oc en la BD */
 
-    const usuario = await getUsuarioPorEmail(loginuser)
+    const usuario = await getUsuarioPorId(req.user.userId)
     console.log("Logged user" + usuario)
+
+    if(usuario.tipoUsuario.rol === "admin") {
+      throw new Error("El administrador no puede emitir compras.")
+    }
+
+
+    const loginuser = usuario.email
 
     if(!usuario){
       throw new Error("Usuario no existe")
@@ -92,7 +99,7 @@ const postOCyDetalle = async (req, res) => {
     }  
   } catch (error) {  
     console.error(error)
-    return res.status(500).send({ error: 'Error en consulta' });  }
+    return res.status(500).send({ error: error.message });  }
 };
 module.exports =  postOCyDetalle ;
 

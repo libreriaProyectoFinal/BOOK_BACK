@@ -88,7 +88,7 @@ const paymentNotif = async (req, res) => {
   } catch (error) {
     console.error('Error al actualizar los libros:', error);
   } 
-   
+  console.log("email enviar a : "+orden.dataValues.usuario.email);
   respuestaEmailCompra(orden.dataValues.usuario.email,orden)
   }
   res.sendStatus(200);
