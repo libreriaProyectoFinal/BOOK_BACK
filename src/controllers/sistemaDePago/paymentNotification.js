@@ -1,6 +1,7 @@
 const { Oc, Libro, Detalleoc, Usuario } = require('../../db.js');
 const axios = require('axios');
-const {respuestaEmailCompra} = require("../../utils/respuestaEmailCompra.js")
+const {respuestaEmailCompra} = require("../../utils/respuestaEmailCompra.js");
+const { TOKEN_MP } = process.env;
 
 const paymentNotif = async (req, res) => {
  try {
@@ -17,7 +18,7 @@ const paymentNotif = async (req, res) => {
   console.log('user_id: ' + notificationData.user_id + '.');
   
   const urld = "https://api.mercadopago.com/v1/payments/" + notificationData.data.id;
-  const tokend = 'TEST-7245813158620870-072815-14435b04fc77bec4dcb8e07a5853d167-1434624699';
+  const tokend = TOKEN_MP;
 // Configuración de Axios con el token de portador
    const config = {
     headers: {

@@ -18,9 +18,6 @@ const htmlCompra = async(pedido) => {
         const precioLibroPagado = detalleocs[i].libro.preciolibro
         html = html+ " <li>"+`Cantidad de Libros: ${cantidad}, Libro: ${nombreLibroPagado}, Precio: ${precioLibroPagado}`+"</li>"
     }
-
-
-  
     //   <li>Producto 1: $20.00</li>
     //   <li>Producto 2: $30.00</li>
     //   <!-- Agrega aquí los detalles de los productos y el total del pedido -->
