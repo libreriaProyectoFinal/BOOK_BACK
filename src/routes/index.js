@@ -40,6 +40,7 @@ const { obtenerAutorPorId } = require('../controllers/autores/obtenerAutorPorId.
 // -generos
 //const { obtenerGeneros } = require('../controllers/obtenerGeneros.js');
 const { obtenerGeneros } = require('../controllers/generos/obtenerGeneros.js');
+const { obtenerComprasPorId } = require('../controllers/compras/getComprasUsuario.js');
 
 const router = Router();
 
@@ -85,6 +86,7 @@ router.get("/obtenerAutorId/:ida", obtenerAutorPorId);
 
 // ---------------- todas compras -------------------
 router.get("/ventas", autenticacionMiddlewareAdmin, getTodasCompras);
+router.get("/compras/:idUsuario",autenticacionMiddleware, obtenerComprasPorId);
 
 // ---------------- estado api -------------------
 router.get('/', (req, res) => { res.send('¡Bienvenido a la API!');});
