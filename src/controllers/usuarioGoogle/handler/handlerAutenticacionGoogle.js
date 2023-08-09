@@ -62,7 +62,9 @@ async function handlerAutenticacionGoogle(req, res) {
       if (existeUsuario) {
         // El usuario ya existe
         // Pense en aplicar el TOKEN Aqui
-
+        if (!existeUsuario.isActive){
+          return res.status(401).json({ error: 'Usuario Inactivo' });
+        }
         const token = await generadorTokenDeAcceso(existeUsuario.id, 'usuario');
 
         console.log("token :", token);
