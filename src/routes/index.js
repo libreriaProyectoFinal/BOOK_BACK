@@ -14,6 +14,8 @@ const { handlerTodosUsuarios, handlerUsuarioPorId, handleCrearUsuario } = requir
 const { handlerUsuarioDeletado, handlerUsuarioSuspendido, handlerUsuarioSinSuspension } = require("../controllers/usuario/handler/handlerUsuario.js");
 // -protecion rutas
 const { autenticacionMiddleware, autenticacionMiddlewareAdmin } = require("../utils/autenticacionMiddleware.js");
+// -visualizar compras admin
+const { getTodasCompras } = require("../controllers/compras/getTodasCompras.js")
 // -------------------------------------------------
 
 // ----------------- matheus + felipe (arreglado y terminado por matheus) --------------
@@ -81,8 +83,11 @@ router.get("/obtenerAutores", obtenerAutores);
 router.get("/obtenerAutorNombre/:nombre", obtenerAutorPorNombre);
 router.get("/obtenerAutorId/:ida", obtenerAutorPorId); 
 
+// ---------------- todas compras -------------------
+router.get("/ventas", autenticacionMiddlewareAdmin, getTodasCompras);
+
 // ---------------- estado api -------------------
 router.get('/', (req, res) => { res.send('¡Bienvenido a la API!');});
-// -------------------------------------------
+// -----------------------------------------------
 
 module.exports = router;
