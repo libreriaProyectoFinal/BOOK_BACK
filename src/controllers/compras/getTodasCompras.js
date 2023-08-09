@@ -17,7 +17,7 @@ const getTodasCompras = async (req, res) => {
                 }
             } , Usuario]
         });
-        console.log("compras: ", compras);
+        // console.log("compras: ", compras);
         res.json({compras});
     } catch (error) {
         console.error(error);

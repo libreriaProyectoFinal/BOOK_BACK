@@ -84,7 +84,7 @@ router.get("/obtenerAutorNombre/:nombre", obtenerAutorPorNombre);
 router.get("/obtenerAutorId/:ida", obtenerAutorPorId); 
 
 // ---------------- todas compras -------------------
-router.get("/ventas", getTodasCompras);
+router.get("/ventas", autenticacionMiddlewareAdmin, getTodasCompras);
 
 // ---------------- estado api -------------------
 router.get('/', (req, res) => { res.send('¡Bienvenido a la API!');});
