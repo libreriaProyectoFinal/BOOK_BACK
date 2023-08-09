@@ -89,9 +89,9 @@ const createPayment = async (req, res) => {
     }
   },
     "back_urls": {
-    "success": "https://book-front-mu.vercel.app//success", 
-    "failure": "https://book-front-mu.vercel.app//failure",
-    "pending": "https://book-front-mu.vercel.app//pending"
+    "success": "https://book-front-mu.vercel.app/success", 
+    "failure": "https://book-front-mu.vercel.app/failure",
+    "pending": "https://book-front-mu.vercel.app/pending"
   },
     notification_url: URL_BACK+"/notifications",
   };
