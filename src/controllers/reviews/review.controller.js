@@ -1,5 +1,14 @@
 const { Libro } = require('../../db.js'); 
 
+const verificarReviewExistente = async (idoc, idusuario) => {
+  const existingReview = await Review.findOne({
+    where: { idoc, idusuario }
+  });
+
+  return existingReview !== null;
+};
+
+
 const reviews = async (req, res) => {
   const { idl } = req.params; 
   const { rating, comment } = req.body; 
@@ -12,11 +21,17 @@ const reviews = async (req, res) => {
       return res.status(404).json({ mensaje: 'Libro no encontrado' });
     }
 
-    // Actualizar la calificación y el comentario en el libro
-    libro.rating = rating;
-    libro.comment = comment;
+    const reviewExistente = await verificarReviewExistente(idoc, usuario.id);
+    if (reviewExistente) {
+      return res.status(400).json({ mensaje: 'Ya has realizado una review para esta orden de compra.' });
+    }
 
-    await libro.save();
+    const newReview = await Review.create({
+      rating,
+      comment,
+      idoc,        
+      idusuario: usuario.id  
+    });
 
     res.json({ mensaje: 'Calificación y comentario agregados correctamente' });
   } catch (error) {

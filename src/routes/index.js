@@ -89,7 +89,10 @@ router.get("/obtenerAutorId/:ida", obtenerAutorPorId);
 router.get('/', (req, res) => { res.send('¡Bienvenido a la API!');});
 
 // ---------------------reviews----------------------
-router.post('/reviews/:idl', autenticacionMiddleware, async (req, res) => {const { idl } = req.params, { rating, comment } = req.body;try {const existingReview = await Review.findOne({where: {idlibro: idl,idusuario: req.user.id,},});if (existingReview)return res.status(400).json({ mensaje: 'Ya has calificado este libro antes.' });const newReview = await Review.create({eval: rating,observa: comment,idlibro: idl,idusuario: req.user.id,});res.json({ mensaje: 'Calificación y comentario agregados correctamente.' });} catch (error) {console.error(error);res.status(500).json({ mensaje: 'Error al agregar calificación y comentario.' });}});
-
+router.post('/reviews/:idl', autenticacionMiddleware, async (req, res) => {
+    const reviewExistente = await verificarReviewExistente(idoc, req.user.id);
+    return reviewExistente ? res.status(400).json({ mensaje: 'Ya has realizado una review para esta orden de compra.' }) : res.json({ mensaje: 'Calificación y comentario agregados correctamente.' });
+  });
+  
 
 module.exports = router;
