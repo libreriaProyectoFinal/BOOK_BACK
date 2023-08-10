@@ -14,8 +14,8 @@ async function respuestaEmailCreacionUsuario(email) {
   const mailOptions = {
     from: 'libreriaproyectofinal@gmail.com',
     to: email,
-    subject: '¡Bienvenido a Libreria Latam! Confirmación de registro exitoso.',
-    text: '¡Gracias por unirte a Libreria Latam! Estamos encantados de que te hayas registrado y te damos la más cordial bienvenida a nuestra comunidad dedicada a venta de libros.',
+    subject: '¡Bienvenido a Book Store! Confirmación de registro exitoso.',
+    text: '¡Gracias por unirte a Book Store! Estamos encantados de que te hayas registrado y te damos la más cordial bienvenida a nuestra comunidad dedicada a venta de libros.',
   };
 
   try {
